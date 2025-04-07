@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>打地鼠游戏</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        /* 自定义鼠标指针 */
+        .game-board {
+            cursor: url('./image/hammer.png') 16 16, pointer;
+        }
+        
+        /* 添加锤子动画元素 */
+        .hammer-cursor {
+            position: absolute;
+            width: 50px; 
+            height: 50px;
+            background-image: url('./image/hammer.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+            pointer-events: none;
+            z-index: 1000;
+            transform-origin: 50% 90%;
+            display: none;
+        }
+        
+        .hammer-cursor.active {
+            display: block;
+            animation: hammerHit 0.2s ease-out forwards;
+        }
+        
+        /* 鼠标按下时的效果 */
+        .game-board:active {
+            cursor: none;
+        }
+        
+        /* 眩晕星星效果 */
+        @keyframes dizzy {
+            0% { opacity: 0; transform: rotate(0deg) scale(0); }
+            50% { opacity: 1; transform: rotate(180deg) scale(1.2); }
+            100% { opacity: 0; transform: rotate(360deg) scale(0); }
+        }
+        
+        /* 眩晕波纹效果 */
+        @keyframes ripple {
+            0% { transform: scale(0); opacity: 1; }
+            50% { transform: scale(1.5); opacity: 0.5; }
+            100% { transform: scale(2); opacity: 0; }
+        }
+        
+        .star {
+            position: absolute;
+            color: yellow;
+            font-size: 30px;
+            text-shadow: 0 0 5px #ff9900, 0 0 10px #ff6600;
+            animation: dizzy 1s ease-out forwards;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        .ripple {
+            position: absolute;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: rgba(255, 255, 0, 0.3);
+            border: 2px solid rgba(255, 165, 0, 0.5);
+            animation: ripple 0.7s ease-out forwards;
+            z-index: 5;
+            pointer-events: none;
+        }
+        
+        /* 地鼠被击中时的效果 */
+        .mole.hit {
+            background-color: rgba(255, 0, 0, 0.3);
+            transform: translateY(30%);
+            transition: transform 0.2s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <div id="hammer-cursor" class="hammer-cursor"></div>
+    <div class="game-container">
+        <div class="game-header">
+            <h1>打地鼠</h1>
+            <div class="score-container">
+                <span>分数: </span>
+                <span id="score">0</span>
+            </div>
+            <div class="time-container">
+                <span>时间: </span>
+                <span id="time">30</span>
+            </div>
+        </div>
+        
+        <div class="game-board">
+            <div class="hole" id="hole-0"><div class="mole"></div></div>
+            <div class="hole" id="hole-1"><div class="mole"></div></div>
+            <div class="hole" id="hole-2"><div class="mole"></div></div>
+            <div class="hole" id="hole-3"><div class="mole"></div></div>
+            <div class="hole" id="hole-4"><div class="mole"></div></div>
+            <div class="hole" id="hole-5"><div class="mole"></div></div>
+            <div class="hole" id="hole-6"><div class="mole"></div></div>
+            <div class="hole" id="hole-7"><div class="mole"></div></div>
+            <div class="hole" id="hole-8"><div class="mole"></div></div>
+        </div>
+        
+        <div class="game-footer">
+            <button id="start-button">开始游戏</button>
+        </div>
+    </div>
+    
+    <script src="script.js"></script>
+</body>
+</html>
